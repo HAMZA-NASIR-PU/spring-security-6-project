@@ -1,3 +1,5 @@
 docker run --name postgres-container -p 5432:5432 -e POSTGRES_PASSWORD=123 -e POSTGRES_USER=hamza -d postgres
 
 ==> -d means in detached mode. -p means port number. -e means Environment variables.
+
+==> Install Heidi SQL for Database interaction

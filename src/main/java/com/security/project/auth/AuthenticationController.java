@@ -1,5 +1,6 @@
 package com.security.project.auth;
 
+import com.security.project.generics.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ public class AuthenticationController {
 	private final AuthenticationService service;
 
 	@PostMapping("/register")
-	public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+	public ResponseEntity<GenericResponse<AuthenticationResponse>> register(@RequestBody RegisterRequest request) {
 		
 		return ResponseEntity.ok(service.register(request));
 

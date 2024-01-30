@@ -1,6 +1,7 @@
 package com.security.project.auth;
 
 import com.security.project.config.JwtService;
+import com.security.project.generics.GenericResponse;
 import com.security.project.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +14,8 @@ import com.security.project.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -20,7 +23,15 @@ public class AuthenticationService {
 	private final PasswordEncoder passwordEncoder;
 	private final JwtService jwtService;
 	private final AuthenticationManager authenticationManager;
-	public AuthenticationResponse register(RegisterRequest request) {
+	public GenericResponse<AuthenticationResponse> register(RegisterRequest request) {
+		GenericResponse<AuthenticationResponse> response = new GenericResponse<>();
+		Optional<User> existingUser = repository.findByEmail(request.getEmail());
+		//if email already exist.
+		if(existingUser.isPresent()){
+			response.setMessage("Email already exist...");
+			response.setData(null);
+			return response;
+		}
 		var user = User.builder()
 				.firstname(request.getFirstname())
 				.lastname(request.getLastname())
@@ -30,7 +41,11 @@ public class AuthenticationService {
 				.build();
 		repository.save(user);
 		var jwtToken = jwtService.generateToken(user);
-		return AuthenticationResponse.builder().token(jwtToken).build();
+		AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+		authenticationResponse.setToken(jwtToken);
+		response.setMessage("User registered successfully...");
+		response.setData(authenticationResponse);
+		return response;
 	}
 
 	public AuthenticationResponse authenticate(AuthenticationRequest request) {
