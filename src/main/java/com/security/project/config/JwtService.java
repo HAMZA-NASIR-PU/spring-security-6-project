@@ -21,7 +21,7 @@ import io.jsonwebtoken.JwtParserBuilder;
 @Service // To make it a bean
 public class JwtService {
 
-	private static final String SECRET_KEY = "F17DDF9DE91F16BC153B259EF6DE9";
+	private static final String SECRET_KEY = "F17DDF9DE91F16BC153B259EF6D89yc47988ry027ry20789r9278883tc0r236tr10js6yrj10r60j1r601xy0r791ry09tn091tn09E9";
 
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
