@@ -22,13 +22,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor // for private final fields
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-//	private final JwtService jwtService; //Giving error
-
-	@Autowired
-	private JwtService jwtService;
-
-	@Autowired
-	private UserDetailsService userDetailsService; // we want its own implementation, so we need a bean
+	private final JwtService jwtService;
+	private final UserDetailsService userDetailsService; // we want its own implementation, so we need a bean
 
 	@Override
 	public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
